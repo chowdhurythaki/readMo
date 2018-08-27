@@ -1,11 +1,12 @@
 const express = require('express');
 const request = require('request-promise');
 
+const gbKey = require('../keys/googleBooks');
 
 const app = express();
 const gbSearch = {
   url:'https://www.googleapis.com/books/v1/volumes?q=',
-  key: 'AIzaSyCpT7qNT_ZLCxrZX6k0eu1pi3m1_u_ruwc',
+  key: gbKey,
 };
 
 const verifyUser = () => {
