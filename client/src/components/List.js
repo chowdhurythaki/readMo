@@ -25,7 +25,7 @@ class List extends Component {
   componentWillMount () {
     const { navigation } = this.props;
     const searchItem = navigation.getParam('search');
-    console.log(searchItem);
+    // console.log(searchItem);
     const params = {
       params: {
         "title": 'catcher in the rye',
@@ -55,7 +55,7 @@ class List extends Component {
       <View style={styles.container}>
         <ScrollView>
           {books.map((book, i) => (
-            <Book book={book} key={i} />
+            <Book book={book} key={i} navigation={this.props.navigation} />
             ))}
         </ScrollView>
       </View>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 25,
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: '#F5FCFF',
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
   Button,
-  Image,
-  TouchableHighlight,
 } from 'react-native';
 
 class Search extends Component {
-  constructor () {
+  constructor (props) {
     super();
 
     this.state = {
-      searchItem: 'search by title',
+      searchItem: '',
     }
-  }
-
-  searchForBook () {
-    return this.props.navigation.navigate('List');
   }
 
   handleChange (text) {
@@ -30,17 +23,40 @@ class Search extends Component {
   }
 
   render () {
+    const { searchItem } = this.state;
     return (
-      <View>
-        <TextInput value={this.state.searchItem} onChangeText={(text) => this.setState({searchItem: text})} />
-        <Button onPress={() => {
+      <View style={styles.container}>
+        <TextInput style={styles.textInput} value={this.state.searchItem} onChangeText={(text) => this.setState({searchItem: text})} />
+        <Button style={styles.button} onPress={() => {
           this.props.navigation.navigate('List', {
-            search: this.state.searchItem,
+            search: searchItem,
           });
-          }} title="Go to List Screen" />
+          }} title="Search" />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 25,
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  textInput: {
+    height: 40,
+    fontFamily: 'Futura',
+    fontSize: 40,
+    textAlign: "center",
+    // borderColor: '#7C7A7A',
+    // borderWidth: 0.5,
+    // borderRadius: 50,
+  },
+  button: {
+    fontFamily: 'Futura',
+    fontSize: 30,
+  }
+})
 
 export default Search;
