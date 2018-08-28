@@ -1,39 +1,44 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  Image,
   ScrollView,
-  SectionList,
 } from 'react-native';
+
+import Book from './Book';
+import testData from '../../../data/testData';
+
 import Expo from 'expo';
 import axios from 'axios';
 
 const { manifest } = Expo.Constants;
 
-export default class App extends Component {
+class List extends Component {
   constructor () {
     super();
+    // this.search = this.props.search;
+
     this.state = {
-      books: [],
+      books: testData,
     }
   }
   componentWillMount () {
+    const { navigation } = this.props;
+    const searchItem = navigation.getParam('search');
+    console.log(searchItem);
     const params = {
       params: {
-        "title": "flowers for algernon",
+        "title": 'catcher in the rye',
       }
     }
-    // console.log(manifest);
 
     axios.get('http://10.8.65.97:3000/search', params)
       .then((response) => {
-        // console.log('then response:', response.data);
+        console.log(response.data);
         return response.data;
       })
       .then(response =>{
-        // console.log(response);
+        console.log('setting state');
         this.setState({
           books: response,
         })
@@ -44,19 +49,13 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.state.books);
+    const { books } = this.state;
+    // console.log('state', books);
     return (
       <View style={styles.container}>
         <ScrollView>
-          {this.state.books.map((book, i) => (
-            <Text key={i}>
-              <Image style={{width: 75, height: 100}} source={{uri: book.thumbnail}} />{"\n"}
-              <Text>{book.title}</Text>{"\n"}
-              <Text>{book.authors}</Text>{"\n"}
-              <Text>{book.description}</Text>{"\n"}
-              <Text>{book.publishDate}</Text>{"\n"}
-              <Text>{book.pageCount}</Text>{"\n"}
-            </Text>
+          {books.map((book, i) => (
+            <Book book={book} key={i} />
             ))}
         </ScrollView>
       </View>
@@ -68,8 +67,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 25,
+    flexDirection: 'row',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+export default List;
